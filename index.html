@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Connect — SMS Receptionist for Irish Tradespeople</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #8BC4A0;
+    --green-mid: #5AAB7A;
+    --green-dark: #2E6B47;
+    --yellow: #FFD700;
+    --yellow-dark: #C9A800;
+    --white: #FFFFFF;
+    --off-white: #F7FAF8;
+    --text: #1A1A1A;
+    --text-muted: #5A6B62;
+    --border: #D4E8DC;
+    --radius: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--white);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--green-dark);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--yellow-dark); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 15px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green-dark); }
+  .nav-cta {
+    background: var(--yellow);
+    color: var(--green-dark);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--yellow-dark); color: var(--white); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--green-dark) 0%, #1A4A32 50%, #0F3022 100%);
+    padding: 100px 5% 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    background: rgba(139,196,160,0.12);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 240px; height: 240px;
+    background: rgba(255,215,0,0.08);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,215,0,0.15);
+    color: var(--yellow);
+    border: 1px solid rgba(255,215,0,0.3);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 span { color: var(--yellow); }
+  .hero p {
+    font-size: clamp(16px, 2vw, 19px);
+    color: rgba(255,255,255,0.75);
+    max-width: 560px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--yellow);
+    color: var(--green-dark);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .btn-primary:hover { background: var(--yellow-dark); color: var(--white); transform: translateY(-1px); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+    font-weight: 500;
+    font-size: 15px;
+    padding: 14px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--off-white);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 5%;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--green-dark);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--yellow-dark); }
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  /* SECTIONS */
+  section { padding: 80px 5%; }
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(26px, 3.5vw, 38px);
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .section-subtitle {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+  .section-header { margin-bottom: 52px; }
+  .centered { text-align: center; }
+  .centered .section-subtitle { margin-left: auto; margin-right: auto; }
+
+  /* HOW IT WORKS */
+  .how-bg { background: var(--off-white); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .step {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    position: relative;
+  }
+  .step-num {
+    width: 44px;
+    height: 44px;
+    background: var(--green-dark);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  .step h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .step p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .step-arrow {
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--green);
+    font-size: 24px;
+    z-index: 2;
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .service-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .service-card:hover {
+    border-color: var(--green);
+    transform: translateY(-2px);
+  }
+  .service-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, var(--green), var(--green-mid));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .service-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .service-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .service-tag {
+    display: inline-block;
+    margin-top: 14px;
+    background: #EAF7EF;
+    color: var(--green-dark);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* WHY */
+  .why-bg { background: var(--off-white); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .why-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+  }
+  .why-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--yellow);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .why-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .why-item p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* CTA BAND */
+  .cta-band {
+    background: linear-gradient(135deg, var(--green-dark), #1A4A32);
+    padding: 72px 5%;
+    text-align: center;
+  }
+  .cta-band h2 {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .cta-band h2 span { color: var(--yellow); }
+  .cta-band p {
+    color: rgba(255,255,255,0.7);
+    font-size: 17px;
+    margin-bottom: 32px;
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 900px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  @media (max-width: 640px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-info h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .contact-info p { color: var(--text-muted); margin-bottom: 24px; font-size: 15px; }
+  .contact-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+  .contact-item-icon {
+    width: 36px;
+    height: 36px;
+    background: #EAF7EF;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .contact-item a { color: var(--green-dark); text-decoration: none; font-weight: 500; }
+  .contact-form { display: flex; flex-direction: column; gap: 14px; }
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--white);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus { border-color: var(--green); }
+  .contact-form textarea { min-height: 120px; resize: vertical; }
+  .contact-form button {
+    background: var(--green-dark);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 28px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+  }
+  .contact-form button:hover { background: var(--green-mid); }
+
+  /* FOOTER */
+  footer {
+    background: var(--text);
+    color: rgba(255,255,255,0.6);
+    padding: 40px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+  }
+  .footer-logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .footer-logo span { color: var(--yellow); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .steps { grid-template-columns: 1fr; }
+    .step-arrow { display: none; }
+    .stats-bar { gap: 32px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Royal<span>Connect</span></div>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why us</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get Started</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">&#128241; Ireland's SMS Receptionist</div>
+  <h1>Never miss a call.<br><span>Never lose a job.</span></h1>
+  <p>Royal Connect answers your calls 24/7, sends you an instant SMS summary, and keeps your business running — even when you're on the tools.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">Get Started Today</a>
+    <a href="#how" class="btn-secondary">See How It Works</a>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">24<span>/7</span></div>
+    <div class="stat-label">Always available</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num"><span>&lt;</span>30<span>s</span></div>
+    <div class="stat-label">SMS to your phone</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Call types handled</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">0</div>
+    <div class="stat-label">Missed opportunities</div>
+  </div>
+</div>
+
+<section id="how" class="how-bg">
+  <div class="section-header centered">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">Simple. Automatic. Reliable.</h2>
+    <p class="section-subtitle">Your customers call your number as normal. Royal Connect takes care of everything else.</p>
+  </div>
+  <div class="steps" style="position:relative;">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Customer calls your number</h3>
+      <p>Your client calls your regular business number. Our AI receptionist picks up instantly, any time of day or night.</p>
+      <div class="step-arrow">&#8250;</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>AI handles the conversation</h3>
+      <p>Our AI listens, understands the enquiry — whether it's a booking, information request, or emergency — and responds professionally.</p>
+      <div class="step-arrow">&#8250;</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>You get an instant SMS</h3>
+      <p>Within seconds, you receive a clear SMS summary on your phone: who called, what they need, and how urgent it is.</p>
+      <div class="step-arrow">&#8250;</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Daily report at end of day</h3>
+      <p>Every evening you receive a full summary of the day's calls — bookings, enquiries, and any issues flagged — straight to your email.</p>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-header">
+    <div class="section-label">Our services</div>
+    <h2 class="section-title">Everything your business needs<br>to never miss a customer</h2>
+    <p class="section-subtitle">Royal Connect handles three types of calls so you can focus on the work.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">&#128197;</div>
+      <h3>Booking Management</h3>
+      <p>Customers can book appointments or request a call-back. You receive the full details instantly — customer name, contact number, preferred time, and job description.</p>
+      <span class="service-tag">Instant SMS alert</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#8505;&#65039;</div>
+      <h3>Information Requests</h3>
+      <p>Callers looking for quotes, availability, or general information are handled professionally. You get a clear summary so you can follow up when it suits you.</p>
+      <span class="service-tag">Same-day follow-up</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#128680;</div>
+      <h3>Emergency Calls</h3>
+      <p>Urgent situations are identified and flagged immediately. You receive a priority alert so you can respond fast — even if you're in the middle of a job.</p>
+      <span class="service-tag">Priority alert</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#128202;</div>
+      <h3>Daily Summary Report</h3>
+      <p>At the end of every working day, receive a complete report of all calls — total enquiries, bookings made, emergencies flagged — delivered straight to your email.</p>
+      <span class="service-tag">Email report</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#128274;</div>
+      <h3>Privacy & Compliance</h3>
+      <p>All calls are processed in full compliance with Irish GDPR law and ComReg regulations. Your customers' data is protected, and your business is covered.</p>
+      <span class="service-tag">GDPR compliant</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#9881;&#65039;</div>
+      <h3>Easy Setup</h3>
+      <p>No hardware, no complicated software. We set everything up for you. Your number stays the same, and you're up and running within 24 hours.</p>
+      <span class="service-tag">Ready in 24 hours</span>
+    </div>
+  </div>
+</section>
+
+<section id="why" class="why-bg">
+  <div class="section-header centered">
+    <div class="section-label">Why Royal Connect</div>
+    <h2 class="section-title">Built for Irish tradespeople</h2>
+    <p class="section-subtitle">We understand how tradespeople work. You're on the tools, not at a desk. Royal Connect works the way you do.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-dot"></div>
+      <div>
+        <h4>No missed jobs</h4>
+        <p>Every call is answered, every enquiry captured. You never lose work because you were busy on-site.</p>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-dot"></div>
+      <div>
+        <h4>Professional image</h4>
+        <p>Your customers always reach a professional service — not voicemail. It builds trust before you even show up.</p>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-dot"></div>
+      <div>
+        <h4>Works 24 hours a day</h4>
+        <p>Emergency calls at 11pm, enquiries on Sunday morning — Royal Connect is always on, so you don't have to be.</p>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-dot"></div>
+      <div>
+        <h4>No extra apps to learn</h4>
+        <p>Everything comes to your regular phone as SMS. No new software, no login, no learning curve.</p>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-dot"></div>
+      <div>
+        <h4>Irish phone number</h4>
+        <p>Your Royal Connect number is a Dublin +353 number — your customers know they're dealing with a local business.</p>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-dot"></div>
+      <div>
+        <h4>Fully GDPR compliant</h4>
+        <p>Registered with Irish Revenue, CRO, and operating under Irish and EU data protection law. You're protected.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <h2>Ready to stop missing calls?<br><span>Start today.</span></h2>
+  <p>Join Irish tradespeople who never miss a job opportunity again.</p>
+  <a href="#contact" class="btn-primary">Get Started — It's Simple</a>
+</section>
+
+<section id="contact">
+  <div class="section-header">
+    <div class="section-label">Contact us</div>
+    <h2 class="section-title">Let's talk</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Get in touch</h3>
+      <p>Send us a message and we'll get back to you within one business day to discuss how Royal Connect can work for your trade.</p>
+      <div class="contact-item">
+        <div class="contact-item-icon">&#128231;</div>
+        <a href="mailto:hello@royalconnect.ie">hello@royalconnect.ie</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">&#127758;</div>
+        <span>Serving all of Ireland</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">&#128197;</div>
+        <span>Setup within 24 hours</span>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="return false;">
+      <input type="text" placeholder="Your name" />
+      <input type="email" placeholder="Your email" />
+      <input type="tel" placeholder="Your phone number" />
+      <input type="text" placeholder="Your trade (e.g. Plumber, Electrician)" />
+      <textarea placeholder="Tell us a bit about your business..."></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Royal<span>Connect</span></div>
+  <div>© 2026 Royal Connect. Registered in Ireland (CRO Ref: SR8979950).</div>
+  <div class="footer-links">
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/terms.html">Terms of Service</a>
+    <a href="mailto:hello@royalconnect.ie">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
