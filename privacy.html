@@ -14,6 +14,11 @@
     line-height: 1.8;
     font-size: 16px;
   }
+  nav { background: #2E6B47; padding: 16px 24px; margin: -40px -24px 40px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-size: 18px; font-weight: 800; color: white; text-decoration: none; letter-spacing: -0.5px; }
+  .nav-logo span { color: #FFD700; }
+  .nav-back { color: rgba(255,255,255,0.8); font-size: 14px; text-decoration: none; }
+  .nav-back:hover { color: white; }
   .logo-area {
     text-align: center;
     margin-bottom: 40px;
@@ -91,6 +96,11 @@
 </style>
 </head>
 <body>
+
+<nav>
+  <a href="/" class="nav-logo">Royal<span>Connect</span></a>
+  <a href="/" class="nav-back">← Back to website</a>
+</nav>
 
 <div class="logo-area">
   <h1>Royal Connect</h1>
@@ -414,7 +424,8 @@
 
 <footer>
   © 2026 Royal Connect. All rights reserved. Registered business name in Ireland (CRO Ref: SR8979950).<br>
-  Privacy Policy v1.2 — Last updated 25 June 2026
+  Privacy Policy v1.2 — Last updated 25 June 2026 &nbsp;|&nbsp;
+  <a href="/terms.html">Terms of Service</a>
 </footer>
 
 </body>
