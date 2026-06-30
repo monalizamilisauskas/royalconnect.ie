@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turn Off Call Forwarding — Royal Connect</title>
+<style>
+  :root {
+    --green: #1A4A32; --green-med: #2E6B47; --green-light: #D4E8DC; --green-pale: #F0F7F3;
+    --gold: #FFD700; --gold-dark: #C9A800; --gold-pale: #FFF8E1;
+    --text-gray: #5A6B62; --text-black: #1A1A1A; --bg: #F7FAF8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
+    background: var(--bg); color: var(--text-black); line-height: 1.6;
+  }
+  .header { background: var(--green); padding: 20px 20px 28px; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--green-light); text-decoration: none; font-size: 13px; margin-bottom: 16px; }
+  .logo { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .logo .royal { color: #fff; } .logo .connect { color: var(--gold); }
+  .header h1 { color: #fff; font-size: 22px; font-weight: 800; margin-top: 8px; }
+  .header p { color: var(--gold); font-size: 13px; margin-top: 4px; }
+  .container { max-width: 480px; margin: 0 auto; padding: 0 0 60px; }
+  .intro { padding: 24px 20px 8px; font-size: 14.5px; color: var(--text-black); }
+  .progress { display: flex; gap: 6px; padding: 16px 20px 4px; }
+  .progress .dot { flex: 1; height: 4px; border-radius: 4px; background: var(--green-light); }
+  .progress .dot.active { background: var(--green-med); }
+  .step { padding: 24px 20px; }
+  .step-badge {
+    display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px;
+    border-radius: 9px; background: var(--green); color: var(--gold); font-size: 15px; font-weight: 800; margin-bottom: 14px;
+  }
+  .step-title { font-size: 21px; font-weight: 800; color: var(--green); margin-bottom: 8px; line-height: 1.25; }
+  .step-desc { font-size: 14px; color: var(--text-gray); margin-bottom: 18px; }
+  .code-pill {
+    display: inline-flex; align-items: center; background: var(--gold-pale); border: 2px solid var(--gold);
+    border-radius: 12px; padding: 12px 18px; font-family: 'SF Mono', 'Courier New', monospace;
+    font-size: 19px; font-weight: 700; color: var(--text-black); letter-spacing: 1px;
+  }
+  .copy-btn {
+    display: inline-flex; align-items: center; gap: 6px; background: var(--green-med); color: #fff;
+    border: none; border-radius: 10px; padding: 10px 16px; font-size: 13px; font-weight: 700;
+    margin-left: 10px; cursor: pointer; font-family: inherit;
+  }
+  .copy-btn:active { transform: scale(0.96); }
+  .copy-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+
+  .phone-wrap { display: flex; justify-content: center; padding: 8px 0 4px; }
+  .phone {
+    width: 240px; height: 495px; background: #1a1a1a; border-radius: 38px; padding: 9px;
+    box-shadow: 0 20px 45px rgba(26,74,50,0.18); position: relative; flex-shrink: 0;
+  }
+  .phone-screen { width: 100%; height: 100%; background: #000; border-radius: 30px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+  .notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 90px; height: 22px; background: #000; border-radius: 0 0 14px 14px; z-index: 10; }
+  .status-bar { height: 34px; background: #fff; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 18px 5px; font-size: 10.5px; font-weight: 600; color: #000; flex-shrink: 0; }
+
+  .dialer-app { flex: 1; background: #fff; display: flex; flex-direction: column; }
+  .dialer-display { padding: 14px 14px 4px; text-align: center; min-height: 56px; display: flex; align-items: center; justify-content: center; }
+  .dialer-number { font-size: 19px; font-weight: 400; color: #1a1a1a; word-break: break-all; line-height: 1.3; }
+  .dialer-number .highlight { color: var(--green); font-weight: 700; }
+  .keypad { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 4px 18px; align-content: center; }
+  .key { aspect-ratio: 1; border-radius: 50%; background: #f0f0f0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; font-weight: 400; color: #1a1a1a; }
+  .key .sub { font-size: 5.5px; letter-spacing: 0.5px; color: #888; margin-top: 1px; }
+  .call-btn-row { display: flex; justify-content: center; padding: 10px 0 18px; }
+  .call-btn { width: 42px; height: 42px; border-radius: 50%; background: var(--green-med); display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(46,107,71,0.4); }
+  .call-btn svg { width: 18px; height: 18px; }
+
+  .toast-screen { flex: 1; background: #f0f0f0; display: flex; align-items: center; justify-content: center; padding: 18px; }
+  .toast-card { background: #fff; border-radius: 16px; padding: 26px 18px; text-align: center; box-shadow: 0 8px 22px rgba(0,0,0,0.12); width: 100%; }
+  .toast-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+  .toast-icon svg { width: 24px; height: 24px; }
+  .toast-title { font-size: 13.5px; font-weight: 700; color: #1A1A1A; margin-bottom: 6px; line-height: 1.3; }
+  .toast-sub { font-size: 10px; color: var(--text-gray); line-height: 1.5; }
+
+  /* Ringing phone */
+  .ring-screen { flex: 1; background: linear-gradient(180deg, #2E6B47 0%, #1A4A32 100%); display: flex; flex-direction: column; align-items: center; padding: 40px 18px 26px; }
+  .ring-avatar { width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  .ring-avatar svg { width: 30px; height: 30px; }
+  .ring-name { color: #fff; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .ring-label { color: var(--gold); font-size: 11px; margin-bottom: auto; }
+  .ring-actions { display: flex; gap: 50px; margin-top: auto; }
+  .ring-action { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .ring-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .ring-circle.decline { background: #E5484D; }
+  .ring-circle.accept { background: #34C759; }
+  .ring-action span { color: #fff; font-size: 9px; }
+
+  .info-box { margin: 20px 20px 0; background: var(--green-pale); border: 1px solid var(--green-light); border-radius: 14px; padding: 16px; }
+  .info-box.warn { background: #fff8e1; border-color: var(--gold); }
+  .info-box-label { font-size: 11px; font-weight: 800; color: var(--green); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .info-box.warn .info-box-label { color: var(--gold-dark); }
+  .info-box-text { font-size: 13px; color: var(--text-black); line-height: 1.5; }
+
+  .divider { height: 1px; background: var(--green-light); margin: 0 20px; }
+
+  .nav-buttons { display: flex; gap: 10px; padding: 28px 20px 0; }
+  .nav-btn { flex: 1; text-align: center; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none; }
+  .nav-btn.primary { background: var(--green-med); color: #fff; }
+  .nav-btn.secondary { background: var(--green-pale); color: var(--green); border: 1px solid var(--green-light); }
+
+  .footer { text-align: center; padding: 32px 20px 20px; margin-top: 20px; }
+  .footer p { font-size: 12px; color: var(--text-gray); }
+  .footer a { color: var(--green-med); text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 360px) { .phone { width: 210px; height: 435px; } }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="guides-home.html" class="back-link">← All guides</a>
+    <div class="logo"><span class="royal">Royal</span><span class="connect">Connect</span></div>
+    <h1>Turn Off Call Forwarding</h1>
+    <p>3 simple steps · Takes 10 seconds</p>
+  </div>
+
+  <div class="container">
+
+    <div class="intro">
+      Want your calls to ring your phone directly again? Follow these steps to switch off forwarding any time.
+    </div>
+
+    <div class="info-box" style="margin-top:18px;">
+      <div class="info-box-label">✓ Works on iPhone, Samsung, Pixel & every Android</div>
+      <div class="info-box-text">Same code, same steps — no matter which phone you're using. Just type it into your regular dialer keypad.</div>
+    </div>
+
+    <div class="progress">
+      <div class="dot active"></div>
+      <div class="dot active"></div>
+      <div class="dot active"></div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-badge">1</div>
+      <div class="step-title">Open your Phone app and dial this code</div>
+      <div class="step-desc">Tap the keypad and type the code below exactly as shown.</div>
+      <div class="copy-row">
+        <div class="code-pill">##61#</div>
+        <button class="copy-btn" onclick="copyCode()">📋 Copy code</button>
+      </div>
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="notch"></div>
+            <div class="status-bar"><span>9:41</span><span>●●● 5G 🔋</span></div>
+            <div class="dialer-app">
+              <div class="dialer-display">
+                <div class="dialer-number"><span class="highlight">##61#</span></div>
+              </div>
+              <div class="keypad">
+                <div class="key">1</div><div class="key">2<span class="sub">ABC</span></div><div class="key">3<span class="sub">DEF</span></div>
+                <div class="key">4<span class="sub">GHI</span></div><div class="key">5<span class="sub">JKL</span></div><div class="key">6<span class="sub">MNO</span></div>
+                <div class="key">7<span class="sub">PQRS</span></div><div class="key">8<span class="sub">TUV</span></div><div class="key">9<span class="sub">WXYZ</span></div>
+                <div class="key">*</div><div class="key">0<span class="sub">+</span></div><div class="key">#</div>
+              </div>
+              <div class="call-btn-row">
+                <div class="call-btn">
+                  <svg viewBox="0 0 24 24" fill="white"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-badge">2</div>
+      <div class="step-title">Confirmation appears</div>
+      <div class="step-desc">A message will confirm that call forwarding has been switched off.</div>
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="notch"></div>
+            <div class="status-bar"><span>9:41</span><span>●●● 5G 🔋</span></div>
+            <div class="toast-screen">
+              <div class="toast-card">
+                <div class="toast-icon">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#1A4A32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="toast-title">Call forwarding deactivated</div>
+                <div class="toast-sub">Calls will now ring your phone directly</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-badge">3</div>
+      <div class="step-title">Test it — your phone should ring normally</div>
+      <div class="step-desc">Have someone call your number. This time your own phone should ring — not Royal Connect.</div>
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="notch"></div>
+            <div class="status-bar"><span>9:41</span><span>●●● 5G 🔋</span></div>
+            <div class="ring-screen">
+              <div class="ring-label">Incoming call</div>
+              <div class="ring-avatar">
+                <svg viewBox="0 0 24 24" fill="#FFD700"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              </div>
+              <div class="ring-name">Unknown Caller</div>
+              <div class="ring-actions">
+                <div class="ring-action">
+                  <div class="ring-circle decline"><svg width="20" height="20" viewBox="0 0 24 24" fill="white" style="transform:rotate(135deg)"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
+                  <span>Decline</span>
+                </div>
+                <div class="ring-action">
+                  <div class="ring-circle accept"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
+                  <span>Accept</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box-label">✓ All Done</div>
+      <div class="info-box-text">Your phone now works exactly as it did before. You can reactivate Royal Connect any time using the setup guide.</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title" style="font-size:16px;">Prefer Using Settings Instead?</div>
+    <div class="info-box" style="margin-top:0;">
+      <div class="info-box-label">📱 iPhone</div>
+      <div class="info-box-text">
+        Go to <b>Settings → Phone → Call Forwarding</b> and toggle it off. If you originally set up forwarding using the code, this toggle may not reflect it — using the code below is more reliable.
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:10px;">
+      <div class="info-box-label">📱 Samsung / Android</div>
+      <div class="info-box-text">
+        Open the <b>Phone app → ⋮ menu → Settings → Supplementary services (or Calling accounts) → Call forwarding</b>, then turn off "When unanswered."
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title" style="font-size:16px;">Code Didn't Work?</div>
+    <div class="info-box warn" style="margin-top:0;">
+      <div class="info-box-label">💡 Try This</div>
+      <div class="info-box-text">If your phone still shows forwarding as active after dialling the code, try restarting your phone and dialling it again. If the issue continues, contact your network provider (Vodafone, Three, Eir, etc.) for help.</div>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="call-forwarding-setup.html" class="nav-btn secondary">Setup Guide</a>
+      <a href="mailto:hello@royalconnect.ie" class="nav-btn primary">Need Help?</a>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>Royal Connect · <a href="mailto:hello@royalconnect.ie">hello@royalconnect.ie</a></p>
+  </div>
+
+  <script>
+    function copyCode() {
+      navigator.clipboard.writeText('##61#').then(() => {
+        const btn = document.querySelector('.copy-btn');
+        const original = btn.innerHTML;
+        btn.innerHTML = '✓ Copied!';
+        setTimeout(() => { btn.innerHTML = original; }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>
