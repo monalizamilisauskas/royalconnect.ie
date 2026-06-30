@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Connect — Help Guides</title>
+<style>
+  :root {
+    --green: #1A4A32;
+    --green-med: #2E6B47;
+    --green-light: #D4E8DC;
+    --green-pale: #F0F7F3;
+    --gold: #FFD700;
+    --gold-dark: #C9A800;
+    --gold-pale: #FFF8E1;
+    --text-gray: #5A6B62;
+    --text-black: #1A1A1A;
+    --bg: #F7FAF8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-black);
+    line-height: 1.6;
+  }
+  .header {
+    background: var(--green);
+    padding: 32px 24px 40px;
+    text-align: center;
+  }
+  .logo {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .logo .royal { color: #fff; }
+  .logo .connect { color: var(--gold); }
+  .header-tag {
+    color: var(--green-light);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .header h1 {
+    color: #fff;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .header p {
+    color: var(--green-light);
+    font-size: 14px;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 28px 0 12px;
+    padding-left: 4px;
+  }
+  .section-label:first-child { margin-top: 0; }
+  .guide-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    border: 1px solid var(--green-light);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .guide-card:active {
+    transform: scale(0.98);
+  }
+  .guide-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--green-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 22px;
+  }
+  .guide-icon.gold { background: var(--gold-pale); }
+  .guide-text { flex: 1; min-width: 0; }
+  .guide-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-black);
+    margin-bottom: 2px;
+  }
+  .guide-desc {
+    font-size: 12.5px;
+    color: var(--text-gray);
+  }
+  .guide-arrow {
+    color: var(--green-med);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .footer {
+    text-align: center;
+    padding: 32px 20px;
+    border-top: 1px solid var(--green-light);
+    margin-top: 24px;
+  }
+  .footer p {
+    font-size: 12px;
+    color: var(--text-gray);
+  }
+  .footer a {
+    color: var(--green-med);
+    text-decoration: none;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo"><span class="royal">Royal</span><span class="connect">Connect</span></div>
+    <div class="header-tag">Automated SMS Receptionist</div>
+    <h1>Help Guides</h1>
+    <p>Simple step-by-step guides to get the most out of your Royal Connect service.</p>
+  </div>
+
+  <div class="container">
+
+    <div class="section-label">Getting Started</div>
+
+    <a href="call-forwarding-setup.html" class="guide-card">
+      <div class="guide-icon">📲</div>
+      <div class="guide-text">
+        <div class="guide-title">Set Up Call Forwarding</div>
+        <div class="guide-desc">Activate Royal Connect on your phone — takes less than 1 minute</div>
+      </div>
+      <div class="guide-arrow">›</div>
+    </a>
+
+    <div class="section-label">Managing Your Service</div>
+
+    <a href="call-forwarding-remove.html" class="guide-card">
+      <div class="guide-icon">🔕</div>
+      <div class="guide-text">
+        <div class="guide-title">Turn Off Call Forwarding</div>
+        <div class="guide-desc">Temporarily disable forwarding to your phone</div>
+      </div>
+      <div class="guide-arrow">›</div>
+    </a>
+
+    <a href="cancellation.html" class="guide-card">
+      <div class="guide-icon gold">ℹ️</div>
+      <div class="guide-text">
+        <div class="guide-title">Cancelling Your Plan</div>
+        <div class="guide-desc">What happens to your number and your service</div>
+      </div>
+      <div class="guide-arrow">›</div>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <p>Need more help? Email us at <a href="mailto:hello@royalconnect.ie">hello@royalconnect.ie</a></p>
+  </div>
+
+</body>
+</html>
