@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cancelling Your Plan — Royal Connect</title>
+<style>
+  :root {
+    --green: #1A4A32; --green-med: #2E6B47; --green-light: #D4E8DC; --green-pale: #F0F7F3;
+    --gold: #FFD700; --gold-dark: #C9A800; --gold-pale: #FFF8E1;
+    --text-gray: #5A6B62; --text-black: #1A1A1A; --bg: #F7FAF8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
+    background: var(--bg); color: var(--text-black); line-height: 1.6;
+  }
+  .header { background: var(--green); padding: 20px 20px 28px; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--green-light); text-decoration: none; font-size: 13px; margin-bottom: 16px; }
+  .logo { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .logo .royal { color: #fff; } .logo .connect { color: var(--gold); }
+  .header h1 { color: #fff; font-size: 22px; font-weight: 800; margin-top: 8px; }
+  .header p { color: var(--gold); font-size: 13px; margin-top: 4px; }
+  .container { max-width: 480px; margin: 0 auto; padding: 0 0 60px; }
+  .intro { padding: 24px 20px 8px; font-size: 14.5px; color: var(--text-black); }
+
+  .timeline { padding: 24px 20px 0; }
+  .tl-item { display: flex; gap: 14px; margin-bottom: 4px; }
+  .tl-marker { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .tl-num {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--green-med); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;
+  }
+  .tl-line { width: 2px; flex: 1; background: var(--green-light); margin: 4px 0; min-height: 30px; }
+  .tl-content { padding-bottom: 28px; flex: 1; }
+  .tl-title { font-size: 15.5px; font-weight: 700; color: var(--text-black); margin-bottom: 4px; }
+  .tl-desc { font-size: 13px; color: var(--text-gray); line-height: 1.55; }
+
+  .info-box { margin: 4px 20px 24px; background: var(--green-pale); border: 1px solid var(--green-light); border-radius: 14px; padding: 16px; }
+  .info-box.warn { background: #fff8e1; border-color: var(--gold); }
+  .info-box-label { font-size: 11px; font-weight: 800; color: var(--green); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .info-box.warn .info-box-label { color: var(--gold-dark); }
+  .info-box-text { font-size: 13px; color: var(--text-black); line-height: 1.5; }
+  .info-box-text b { color: var(--green); }
+  .info-box.warn .info-box-text b { color: var(--gold-dark); }
+
+  .section-title { font-size: 18px; font-weight: 800; color: var(--green); padding: 8px 20px 12px; }
+
+  .reason-list { padding: 0 20px; margin-bottom: 8px; }
+  .reason-item { display: flex; gap: 12px; margin-bottom: 14px; }
+  .reason-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-dark); margin-top: 8px; flex-shrink: 0; }
+  .reason-text { font-size: 13.5px; color: var(--text-black); line-height: 1.55; }
+
+  .divider { height: 1px; background: var(--green-light); margin: 24px 20px; }
+
+  .code-callout {
+    margin: 0 20px 24px;
+    background: var(--green);
+    border-radius: 16px;
+    padding: 22px;
+    text-align: center;
+  }
+  .code-callout-label { color: var(--green-light); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .code-callout-code {
+    display: inline-block; background: rgba(255,255,255,0.1); border: 2px solid var(--gold);
+    border-radius: 10px; padding: 10px 20px; font-family: 'SF Mono', 'Courier New', monospace;
+    font-size: 19px; font-weight: 700; color: var(--gold); letter-spacing: 1px; margin-bottom: 14px;
+  }
+  .code-callout-sub { color: var(--green-light); font-size: 12.5px; line-height: 1.5; margin-bottom: 14px; }
+  .code-callout-link {
+    display: inline-block; background: var(--gold); color: var(--green); text-decoration: none;
+    font-size: 13px; font-weight: 700; padding: 10px 20px; border-radius: 10px;
+  }
+
+  .nav-buttons { display: flex; gap: 10px; padding: 8px 20px 0; }
+  .nav-btn { flex: 1; text-align: center; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none; }
+  .nav-btn.primary { background: var(--green-med); color: #fff; }
+  .nav-btn.secondary { background: var(--green-pale); color: var(--green); border: 1px solid var(--green-light); }
+
+  .footer { text-align: center; padding: 32px 20px 20px; margin-top: 20px; }
+  .footer p { font-size: 12px; color: var(--text-gray); }
+  .footer a { color: var(--green-med); text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="guides-home.html" class="back-link">← All guides</a>
+    <div class="logo"><span class="royal">Royal</span><span class="connect">Connect</span></div>
+    <h1>Cancelling Your Plan</h1>
+    <p>What happens to your number and your service</p>
+  </div>
+
+  <div class="container">
+
+    <div class="intro">
+      We're sorry to see you go. Here's exactly what happens — step by step — so there are no surprises.
+    </div>
+
+    <div class="section-title">What Happens When You Cancel</div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-marker">
+          <div class="tl-num">1</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-title">Your subscription ends</div>
+          <div class="tl-desc">Your billing stops on the date you choose. No further charges will be made to your card.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-marker">
+          <div class="tl-num">2</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-title">Call forwarding is deactivated</div>
+          <div class="tl-desc">We'll guide you to turn off forwarding with one simple code. Your calls go back to ringing your phone directly.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-marker">
+          <div class="tl-num">3</div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-title">Your number stays reserved for 30 days</div>
+          <div class="tl-desc">Your dedicated number is not given to anyone else immediately — we keep it reserved just for you.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-marker">
+          <div class="tl-num">4</div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-title">After 30 days, the number may be reassigned</div>
+          <div class="tl-desc">If you don't return within 30 days, the number becomes available for a new client.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box-label">ℹ Good to Know</div>
+      <div class="info-box-text">If you cancel and come back within <b>30 days</b>, we'll do our best to give you back the same number so your existing customers don't notice any change.</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title">Why We Wait 30 Days</div>
+
+    <div class="reason-list">
+      <div class="reason-item">
+        <div class="reason-dot"></div>
+        <div class="reason-text">Your past customers may still have this number saved in their phone. Waiting avoids confusion if they try to contact you again.</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-dot"></div>
+        <div class="reason-text">It gives you time to make sure call forwarding is properly switched off on your own phone.</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-dot"></div>
+        <div class="reason-text">It protects your business identity — no other tradesperson will receive messages meant for you.</div>
+      </div>
+    </div>
+
+    <div class="code-callout">
+      <div class="code-callout-label">One Last Step</div>
+      <div class="code-callout-code">##61#</div>
+      <div class="code-callout-sub">Please dial this code to deactivate call forwarding after cancelling. It only takes 10 seconds.</div>
+      <a href="call-forwarding-remove.html" class="code-callout-link">View Full Guide →</a>
+    </div>
+
+    <div class="info-box warn">
+      <div class="info-box-label">💡 Changed Your Mind?</div>
+      <div class="info-box-text">No problem at all! Just get in touch before the 30 days are up, and we'll get you back up and running with the same number and settings exactly as they were.</div>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="guides-home.html" class="nav-btn secondary">All Guides</a>
+      <a href="mailto:hello@royalconnect.ie" class="nav-btn primary">Contact Us</a>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>Royal Connect · <a href="mailto:hello@royalconnect.ie">hello@royalconnect.ie</a></p>
+  </div>
+
+</body>
+</html>
